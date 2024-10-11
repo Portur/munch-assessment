@@ -9,7 +9,7 @@ services:
       - api_data:/var/lib/postgresql/data
       - ./psql_scripts:/docker-entrypoint-initdb.d
     environment:
-      POSTGRES_PASSWORD: secretpassword
+      POSTGRES_PASSWORD: password
   api:
     image: "node"
     user: "node"
@@ -23,6 +23,6 @@ services:
     links:
       - db:database
     command: "node server.js"
-    
+
 volumes:
   api_data:
