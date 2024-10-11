@@ -1,29 +1,67 @@
 # Typescript, Nodejs, Express, Postgres server.
-A basic API you can run locally with minimal setup.
-Includes Unit tests and E2E tests to ensure the DB can be hit.
+
+- ExpressJs
+- Jest
+- Prisma
+- Postgres
+- Swagger AutoGen
+
+## Main
+
+- http://localhost:4000/ -> api-docs
 
 ## Setup
-The Postgres CLI will need to be used and docker needs to be running on your machine.
+
+### Docker `postgres:latest`
+
+- Postgres 17 :
+    - Main: deployed / local
+    - Shadow: Prisma migration validation
+    - Test: e2e Testing
+
+### Install
+
+`npm install`
+
+### Environment Variables Example
 
 ```
-brew install postgresql
-npm i
+SERVER_PORT=4000
+
+JWT_SECRET=xx
+
+DATABASE_URL=postgresql://postgres:password@localhost:5432/munch?schema=public&application_name=your_local_connection_name&connection_limit=1
+SHADOW_DATABASE_URL=postgresql://postgres:password@localhost:5433/munch?schema=public&application_name=your_local_connection_name&connection_limit=1
 ```
 
-## running development
-```
-cp ./environment/local_example.env .env
-docker-compose up -d
-npm run dev
-```
-or
-`./scripts/run-local.sh`
-or if you want to run it all in docker
-`./scripts/run-local-docker.sh`
+### Test Environment Variables Example
 
-## running tests (unit)
-`npm run test:unit`
+```
+JWT_SECRET=test
 
-## running tests (e2e)
-Ensure docker is running
-`npm run test:e2e`
+DATABASE_URL=postgresql://postgres:password@localhost:5434/munch?schema=public&application_name=your_local_connection_name&connection_limit=1
+```
+
+### DB init
+
+###### /TODO - add to docker script(s) and lunch setup
+
+```sql 
+CREATE
+DATABASE munch;
+```
+
+## Run
+
+`npm run dev`
+
+## Test
+
+`npm run test`
+
+## Database migration
+
+After updating db Model run
+`npm run prisma:migrate:dev`
+`npm run prisma:generate` 
+
